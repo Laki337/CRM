@@ -19,8 +19,6 @@ public class User implements UserDetails {
     private String password;
     private boolean active;
     private String email;
-    private String activationCode;
-    private boolean ban;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -29,21 +27,21 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return isActive();
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 }
