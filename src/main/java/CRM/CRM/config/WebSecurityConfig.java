@@ -23,17 +23,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .antMatcher("/**")
                 .authorizeRequests()
-                .antMatchers("/", "/login**", "/js/**", "/error**").permitAll()
-                .anyRequest().authenticated()
-                .and().logout().logoutSuccessUrl("/").permitAll();
-
+                .antMatchers("/**", "/login**", "/js/**", "/error**").permitAll()
+                .anyRequest().authenticated();
+        http
+                .formLogin()
+                .loginPage("/login")
+                .permitAll()
+                .and()
+                .logout()
+                .permitAll();
 
     }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService).passwordEncoder(getPasswordEncoder());
 
     }
+
     @Bean
     public PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder();
