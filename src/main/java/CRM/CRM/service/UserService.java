@@ -1,5 +1,6 @@
 package CRM.CRM.service;
 
+import CRM.CRM.model.Role;
 import CRM.CRM.model.User;
 import CRM.CRM.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -39,6 +42,7 @@ public class UserService implements UserDetailsService {
         user.setUsername(name);
         user.setPassword(passwordEncoder.encode(password));
         user.setEmail(email);
+        user.setRoles(Collections.singleton(Role.USER));
         userRepository.save(user);
 
         return true;
