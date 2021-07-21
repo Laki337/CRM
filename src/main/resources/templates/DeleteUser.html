@@ -2,15 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+
 </head>
 <body>
-<form th:action="@{/login}" method="post">
+Удаление пользователя
+<form th:action="@{/registration}" method="post">
   <div><label> User Name : <input type="text" name="username"/> </label></div>
   <div><label> Password: <input type="password" name="password"/> </label></div>
+  <div><label> Email: <input type="text" name="email"/> </label></div>
   <div><input type="submit" value="Sign In"/></div>
-    <button  type="submit"> Востоновить  пароль</a> </button>
 </form>
-</div>
 </body>
 </html>

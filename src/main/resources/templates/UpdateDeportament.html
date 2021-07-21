@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+Добовление отдела
+<form th:action="@{/updateDeportament}" method="post">
+    <div><label> Старое имя  : <input type="text" name="name"/> </label></div>
+    <div><label> Новое имя: <input type="text" name="newName"/> </label></div>
+    <div><input type="submit" value="Обновить"/></div>
+</form>
+</body>
+</html>

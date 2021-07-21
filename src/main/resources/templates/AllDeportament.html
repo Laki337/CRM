@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+</head>
+<body>
+<div th:each="el : ${deportaments}"></div>
+<p th:text="${el.name}"/>
+    Все отделы
+</body>
+</html>

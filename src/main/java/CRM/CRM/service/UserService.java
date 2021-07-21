@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.Optional;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -43,11 +44,14 @@ public class UserService implements UserDetailsService {
         user.setPassword(passwordEncoder.encode(password));
         user.setEmail(email);
         user.setRoles(Collections.singleton(Role.USER));
-        userRepository.save(user);
+        user =userRepository.save(user);
 
-        return true;
+        return user.getId()!=0;
     }
 
+    public User findUserId(Long id){
+        return userRepository.findById(id).get();
+    }
     public boolean deleteUser(String email) {
         User user = userRepository.findByEmail(email);
         if (user == null) {
@@ -57,12 +61,19 @@ public class UserService implements UserDetailsService {
         userRepository.delete(user);
         return true;
     }
+    public void saveUser(User user){
+        userRepository.save(user);
+    }
 
     public boolean updateUser(String oldEmail, String name, String newEmail, String password){
         User user = userRepository.findByEmail(oldEmail);
         return true;
     }
 
+    public User checkEmail(String email){
+
+        return userRepository.findByEmail(email);
+    }
     public boolean changeEmail(){
         return true;
     }
