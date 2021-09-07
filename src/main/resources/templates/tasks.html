@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<header th:insert="fragments/header :: header"></header>
+
+<div id="content" class="span11" style="min-height: 969px;">
+    <div class="row-fluid">
+
+        <div class="span7">
+            <h1>Tasks</h1>
+
+            <div class="priority high"><span>high priority</span></div>
+            <div th:each="el : ${hight}">
+            <div class="task high">
+                <div class="desc">
+                    <div class="title">  <p th:text="${el.title}"/></div>
+                    <div> <p th:text="${el.full_text}"/></div>
+                </div>
+                <div class="time">
+                    <div class="date">Дата начала <p th:text="${el.localDateTimeStart}"/></div>
+                    <div> Дата конца <p th:text="${el.localDateTimeEnd }"/></div>
+                </div>
+               <button type="submit" th:href=" '/tasks/' + ${el.id} + '/ready' ">Сдать задачу</button>
+
+            </div>
+
+            <div class="priority medium"><span>medium priority</span></div>
+                <div th:each="el : ${medium}">
+            <div class="task medium">
+                <div class="desc">
+                    <div class="title">  <p th:text="${el.title}"/></div>
+                    <div> <p th:text="${el.full_text}"/></div>
+                </div>
+                <div class="time">
+                    <div class="date">Jun 1, 2012</div>
+                    <div> 1 day</div>
+                </div>
+            </div>
+
+            <div class="priority low"><span>low priority</span></div>
+                    <div th:each="el : ${easy}">
+            <div class="task low">
+                <div class="desc">
+                    <div class="title">  <p th:text="${el.title}"/></div>
+                    <div> <p th:text="${el.full_text}"/></div>
+                </div>
+                <div class="time">
+                    <div class="date">Дата начала <p th:text="${el.localDateTimeStart}"/></div>
+                    <div> Дата конца <p th:text="${el.localDateTimeEnd }"/></div>
+                </div>
+            </div>
+
+
+        </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

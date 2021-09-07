@@ -14,11 +14,11 @@ public class DeportamentServiceImpl implements  DeportamentService{
     DeportamentRepository deportamentRepository;
 
 
-
     @Override
-    public void add(Deportament deportament) {
+    public void createDepartament(Deportament deportament) {
         deportamentRepository.save(deportament);
     }
+
 
     @Override
     public void update(Deportament deportament, String name) {

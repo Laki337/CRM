@@ -2,12 +2,8 @@ package CRM.CRM.model;
 
 
 import lombok.Data;
-import org.hibernate.annotations.ManyToAny;
 
 import javax.persistence.*;
-import java.sql.Time;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Table
@@ -19,30 +15,33 @@ public class Task {
     private Long id;
     private String title;
     private  String full_text;
-    private Date  localDateTimeStart;
-     private Date localDateTimeEnd;
-    private long userId;
-    private  long departamentId;
-
-    public Task(String title, String full_text, Date localDateTimeStart,Date localDateTimeEnd,long userId ){
-        this.title = title;
-        this.full_text = full_text;
-        this.localDateTimeStart = localDateTimeStart;
-       this.localDateTimeEnd = localDateTimeEnd;
-        this.userId = userId;
-
-    }
-
-
-    public Task(String title, String full_text, Date localDateTimeStart,long departamentId ,Date localDateTimeEnd){
-        this.title = title;
-        this.full_text = full_text;
-        this.localDateTimeStart = localDateTimeStart;
-      this.localDateTimeEnd = localDateTimeEnd;
-        this.departamentId = departamentId;
-    }
+    private String  localDateTimeStart;
+     private String localDateTimeEnd;
+     private String priority;
+    private Long userId;
+    private  Long departamentId;
+    private  boolean active;
 
     public Task(){
 
+    }
+    public Task( String title, String full_text, String localDateTimeStart, String localDateTimeEnd, String priority,Long deportamentId, Long userId,  boolean active) {
+        this.title = title;
+        this.full_text = full_text;
+        this.localDateTimeStart = localDateTimeStart;
+        this.localDateTimeEnd = localDateTimeEnd;
+        this.priority = priority;
+        this.departamentId = deportamentId;
+        this.userId = userId;
+        this.active = active;
+    }
+    public Task( String title, String full_text, String localDateTimeStart, String localDateTimeEnd, String priority, Long userId,  boolean active) {
+        this.title = title;
+        this.full_text = full_text;
+        this.localDateTimeStart = localDateTimeStart;
+        this.localDateTimeEnd = localDateTimeEnd;
+        this.priority = priority;
+        this.userId = userId;
+        this.active = active;
     }
 }

@@ -7,7 +7,7 @@ import java.util.List;
 @Service
 public interface DeportamentService {
 
-     void add(Deportament deportament);
+     void createDepartament(Deportament deportament);
      void update(Deportament deportament , String name);
      void delete(Deportament deportament);
      Deportament find(Long id);

@@ -9,10 +9,14 @@ import java.util.Optional;
 @Service
 public interface TaskService {
 
-    void add(Task task);
+    String add(Task task);
     void update(Task task);
-    void delete(Task task);
+    String delete(Task task);
     Optional<Task> find(Long id);
+    List<List<Task>> findTaskPriority(Long id);
     List<Task> findAll();
     Task findName(String name);
+
+
+
 }

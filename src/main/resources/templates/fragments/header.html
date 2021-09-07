@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<div th:fragment="header">
+<html xmlns:th="http://www.thymeleaf.org"   xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+
+    <meta charset="utf-8">
+    <link id="bootstrap-style" href="/bootstrap.min.css" rel="stylesheet">
+    <link id="base-style" href="/stylee.css" rel="stylesheet">
+    <link id="base-style-responsive" href="/style-responsive.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+<body>
+
+<div id="sidebar-left" class="span2">
+    <div class="nav-collapse sidebar-nav">
+        <ul class="nav nav-tabs nav-stacked main-menu">
+            <li><a href="index"><i class="icon-bar-chart"></i><span class="hidden-tablet"> Панель </span></a></li>
+            <li><a href="messages"><i class="icon-envelope"></i><span class="hidden-tablet"> Сообщения</span></a></li>
+            <li><a href="tasks"><i class="icon-tasks"></i><span class="hidden-tablet"> Задачи</span></a></li>
+            <li><a href="lc"><i class="icon-eye-open"></i><span class="hidden-tablet">Личный кабинет</span></a></li>
+            <li><a href="form"><i class="icon-edit"></i><span class="hidden-tablet"> Формы</span></a></li>
+            <li><a href="chart"><i class="icon-list-alt"></i><span class="hidden-tablet"> Графики</span></a></li>
+            <li><a href="gallery"><i class="icon-picture"></i><span class="hidden-tablet"> Галерея</span></a></li>
+            <div sec:authorize = "hasRole('USER')">
+                <li><a href="table"><i class="icon-align-justify"></i><span class="hidden-tablet"> Таблицы</span></a></li>
+            </div>
+
+            <li><a href="calendar"><i class="icon-calendar"></i><span class="hidden-tablet"> Календарь</span></a></li>
+            <li><a href="file-manager"><i class="icon-folder-open"></i><span class="hidden-tablet"> Хранилище файлов</span></a></li>
+            <li><a href="login"><i class="icon-lock"></i><span class="hidden-tablet"> Авторизация</span></a></li>
+        </ul>
+    </div>
+</div>
+
+</body>
+
+</html>
+</div>

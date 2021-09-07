@@ -7,16 +7,12 @@ import CRM.CRM.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.Optional;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("")
+@RequestMapping("/deportament")
 public class DeportamentController {
+
 
     @Autowired
     DeportamentService deportamentService;
@@ -24,25 +20,12 @@ public class DeportamentController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/deportament")
+    @GetMapping("")
     public String deportament(){
 
         return "deportament";
     }
-    @PostMapping("/createDeportament")
-    public String createDeportament(String name){
-        Deportament deportament = new Deportament(name);
-        deportamentService.add(deportament);
-        return "deportament";
-    }
-    @PostMapping ("/updateDeportament")
-    public String updateDeportament(String name,String newName){
-        System.out.println(name);
-        Deportament deportament =deportamentService.findByName(name);
-        System.out.println(newName);
-        deportamentService.update(deportament,newName);
-        return "deportament";
-    }
+
     @PostMapping ("/deportamentAddUser")
     public void deportamentAddUser(Long id, String name){
        User user = userService.findUserId(id);
@@ -54,14 +37,28 @@ public class DeportamentController {
     @PostMapping ("/deleteDeportament")
     public void deleteDeportament(String name){
       Deportament deportament = deportamentService.findByName(name);
-
+      deportamentService.delete(deportament);
 
     }
-    @GetMapping("/AllDeportament")
-    public String allDeportament(Model model){
-        Iterable<Deportament> deportaments = deportamentService.findAll();
-        System.err.println(deportaments.toString());
-        model.addAttribute("deportaments",deportaments);
-        return "AllDeportament";
+
+    @GetMapping("/deportament/{id}/update")
+    public String getDeportamentUpdate(@PathVariable(value = "id") Long id, Model model){
+        Deportament deportament = deportamentService.find(id);
+        model.addAttribute("deportaments",deportament);
+        return "UpdateDeportament";
+    }
+    @PostMapping("/deportament/{id}/update")
+    public String deportamentUpdate(@PathVariable(value = "id") Long id, String name){
+        Deportament deportament = deportamentService.find(id);
+        deportament.setName(name);
+        deportamentService.createDepartament(deportament);
+        return "main";
+    }
+    @PostMapping("/deportament/{id}/delete")
+    public String deportamentDelete(@PathVariable(value = "id") Long id){
+        System.err.println("RAZ");
+        Deportament deportament = deportamentService.find(id);
+        deportamentService.delete(deportament);
+        return "table";
     }
 }

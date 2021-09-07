@@ -1,10 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/task.css" />
 </head>
 <body>
-    Все задачи
+
+
+<div th:each="el : ${task}">
+    <p th:text="${el.title}"/>
+    <p th:text="${el.full_text}"/>
+    <p th:text="${el.localDateTimeStart}"/>
+    <p th:text="${el.localDateTimeEnd}"/>
+    <p th:text="${el.userId}"/>
+    <p th:text="${el.departamentId}"/>
+</div>
+<button id="myBtn">Создать задачу</button>
+<div id="myModal" class="modal">
+
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <form th:action="@{/AllTask}" method="post">
+          <label> Название <input type="text" name="name" /></label>
+            <label>  Описание задачи <input type="text" name="full_text"/></label>
+            <label> Начало  <input type="text" name="localDateTimeStart"/></label>
+            <label> Для какого отдела <input type="text" name="deportamentId"/></label>
+            <label>   Конец <input type="text" name="localDateTimeEnd"/></label>
+            <button type="submit" > Создать</button>
+        </form>
+    </div>
+
+</div>
+
+<script>
+    let modal = document.getElementById("myModal");
+    let btn = document.getElementById("myBtn");
+    let span = document.getElementsByClassName("close")[0];
+    btn.onclick = function() {
+        modal.style.display = "block";
+    }
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
+
 </body>
 </html>

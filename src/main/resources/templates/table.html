@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//ajax.aspnetcdn.com/ajax/jquery.ui/1.10.3/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="/dialog.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+</head>
+<body>
+<header th:insert="fragments/header :: header"></header>
+<div id="content" class="span10">
+    <div class="row-fluid sortable">
+        <div class="box span12">
+            <div class="box-header" data-original-title>
+                <h2><i class="halflings-icon white user"></i><span class="break"></span>Members</h2>
+                <div class="box-icon">
+                    <a href="#" class="btn-setting"><i class="halflings-icon white wrench"></i></a>
+                    <a href="#" class="btn-minimize"><i class="halflings-icon white chevron-up"></i></a>
+                    <a href="#" class="btn-close"><i class="halflings-icon white remove"></i></a>
+                </div>
+            </div>
+            <div class="box-content">
+                <table class="table table-striped table-bordered bootstrap-datatable datatable">
+                    <thead>
+                    <tr>
+                        <th>Название</th>
+                        <th>Дата создания</th>
+                        <th>Задачи</th>
+                        <th>Сотрудники</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <div class="nanana"
+            </div>
+            <div th:each="el : ${deportaments}">
+                <tr>
+                    <td class="center"><p th:text="${el.dataCreate}"/></td>
+                    <td class="center"><p th:text="${el.name}"/></td>
+                    <td class="center"><a th:href=" '/tasks/' + ${el.id}">Задачи</a></td>
+                    <td class="center"><a th:href=" '/users/' + ${el.id}">Сотрудники</a></td>
+                    <input class="input-xlarge focused" th:name="${el.id}"
+                           placeholder="Дата начала" type="hidden">
+                    </td>
+                    <td class="center">
+                        <button class="buton" th:name="${el.id}">Показать диалоговое окно</button>
+                        <form th:action="'/deportament/'+ ${el.id}+'/delete'" method="post">
+                            <button type="submit" class="btn btn-danger"></button>
+                            <i class="halflings-icon white trash"></i>
+                        </form>
+                    </td>
+                </tr>
+
+            </div>
+            </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</div>
+<div id="dialog" title="Диалоговое окно" name="dialog">
+    <div class=\"box-content\">
+        <div class="control-group">
+            <form th:action="@{/createTaskDeportament}" method="post">
+                <label class="control-label">Название задачи</label>
+                <div class="controls">
+                    <input class="input-xlarge focused" name="name" type="text"
+                           placeholder="Название задачи">
+                </div>
+                <label class="control-label">Описание задачи</label>
+                <div class="controls">
+                    <input class="input-xlarge focused" name="full_text" type="text"
+                           placeholder="Описание заадчи">
+                </div>
+                <label class="control-label">Дата начала</label>
+                <div class="controls">
+                    <input class="input-xlarge focused" name="localDateTimeStart" type="date"
+                           placeholder="Дата начала">
+                </div>
+                <label class="control-label">Дата конца</label>
+                <div class="controls">
+                    <input class="input-xlarge focused" name="localDateTimeEnd" type="date"
+                           placeholder="Дата конца">
+                </div>
+                <div class="controls hideSelect" id="hideSelect">
+                    <select class="controls" name="priority">
+                        <option disabled>Выберите отдел</option>
+                        <option ></option>
+                        <option selected value="Не срочно">Не срочно</option>
+                        <option value="Средней срочности">Средней срочности</option>
+                        <option value="Очень срочно">Очень срочно</option>
+                    </select>
+                </div>
+                <input class="input-xlarge focused" name="deportamentId" type="hidden" id = "deportamentId"
+                       placeholder="Дата конца">
+                <button id = "baton" type="submit" class="btn btn-primary">Создать</button>
+
+            </form>
+            <div id="str"></div>
+        </div>
+
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(function () {
+        $('#dialog').dialog({
+            autoOpen: false,
+            position: ['center', 'top']
+        });
+
+        $('.buton').button().click(function (e) {
+            let a = e.target
+            console.log(a);
+            console.log($(a).attr('name'));
+            $('#deportamentId').val($(a).attr('name'));
+            $('#dialog').dialog("open")
+        });
+
+    });
+</script>
+</head>
+
+
+</body>
+
+
+</html>
