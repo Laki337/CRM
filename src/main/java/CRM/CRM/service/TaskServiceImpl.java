@@ -22,11 +22,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public String add(Task task) {
-     //   User user = userService.findUserId(task.getUserId());
-      //  if (user == null) {
-     //       return "";
-     //   }
-     //   userService.saveUser(user);
+
         taskRepository.save(task);
         return "Создание задачи прошло успешно";
     }
@@ -57,6 +53,11 @@ public class TaskServiceImpl implements TaskService {
 
     public Task findName(String name) {
         return taskRepository.findByTitle(name);
+    }
+
+    @Override
+    public List<Task> findByPriority(String priority) {
+        return taskRepository.findByPriority(priority);
     }
 
 

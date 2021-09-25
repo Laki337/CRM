@@ -20,13 +20,6 @@ public class RegistrationController {
     @Autowired
     UserService userService;
 
-
-
-    @RequestMapping("/test")
-    public String past() {
-        return "form";
-    }
-
     @GetMapping("/changePassword")
     public String pas() {
         return "changePassword";

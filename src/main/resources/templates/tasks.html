@@ -36,9 +36,10 @@
                     <div> <p th:text="${el.full_text}"/></div>
                 </div>
                 <div class="time">
-                    <div class="date">Jun 1, 2012</div>
-                    <div> 1 day</div>
+                    <div class="date">Дата начала <p th:text="${el.localDateTimeStart}"/></div>
+                    <div> Дата конца <p th:text="${el.localDateTimeEnd }"/></div>
                 </div>
+                <button type="submit" th:href=" '/tasks/' + ${el.id} + '/ready' ">Сдать задачу</button>
             </div>
 
             <div class="priority low"><span>low priority</span></div>
@@ -52,6 +53,7 @@
                     <div class="date">Дата начала <p th:text="${el.localDateTimeStart}"/></div>
                     <div> Дата конца <p th:text="${el.localDateTimeEnd }"/></div>
                 </div>
+                <button type="submit" th:href=" '/tasks/' + ${el.id} + '/ready' ">Сдать задачу</button>
             </div>
 
 

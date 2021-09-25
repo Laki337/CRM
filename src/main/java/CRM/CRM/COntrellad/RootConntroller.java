@@ -13,8 +13,8 @@ public class RootConntroller {
     @ModelAttribute
     public void doit(HttpServletRequest request, Model model){
 
-        String adres = request.getRequestURI() ;
-        System.out.println(adres);
+        StringBuffer adres = request.getRequestURL();
+        System.out.println(request.getRequestURL().toString());
         model.addAttribute("adres", adres);
 
        model.addAttribute("pr", "peremennaya R");

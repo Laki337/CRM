@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
-public interface DeportamentService {
+public interface DeportamentService{
 
      void createDepartament(Deportament deportament);
      void update(Deportament deportament , String name);

@@ -12,9 +12,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
-
+@RequestMapping("/tasks")
 public class TaskController {
 
     @Autowired
@@ -74,7 +75,7 @@ public class TaskController {
                                  @RequestParam(name = "priority" , required = false)  String priority
                                         ) {
         System.out.println(deportamentId);
-        Task task = new Task(name, full_text, localDateTimeStart, localDateTimeEnd,priority ,5L, 3L, true);
+        Task task = new Task(name, full_text, localDateTimeStart, localDateTimeEnd,priority ,5L, true);
         System.out.println(deportamentId);
         System.err.println("TASK");
         taskService.add(task);
@@ -134,15 +135,18 @@ public class TaskController {
         return "tasks";
     }
 
-    @GetMapping("/tasks/{id}")
+    @GetMapping("/user/{id}")
     public String takss(@PathVariable(value = "id") Long id,Model model){
-        List<Task> tasks = taskService.findAll();
-        for(Task task: tasks){
-            if (task.getDepartamentId()!= id){
-                tasks.remove(task);
-            }
-        }
-        model.addAttribute("tasks",tasks);
+        System.out.println("рррр");
+        List<Task> hight = taskService.findByPriority("Очень срочно");
+        System.out.println("2222");
+        List<Task> medium = taskService.findByPriority("Средней срочности");
+        List<Task> easy = taskService.findByPriority("Не срочно");
+
+
+        model.addAttribute("hight", hight);
+        model.addAttribute("medium", medium);
+        model.addAttribute("easy", easy);
         return "tasks";
     }
 

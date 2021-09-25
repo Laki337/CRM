@@ -28,6 +28,9 @@
             <li><a href="calendar"><i class="icon-calendar"></i><span class="hidden-tablet"> Календарь</span></a></li>
             <li><a href="file-manager"><i class="icon-folder-open"></i><span class="hidden-tablet"> Хранилище файлов</span></a></li>
             <li><a href="login"><i class="icon-lock"></i><span class="hidden-tablet"> Авторизация</span></a></li>
+            <div sec:authorize="!isAnonymous()">
+            <li><a th:href="@{/logout}"><i class="icon-lock"></i><span class="hidden-tablet"> Выход</span></a></li>
+            </div>
         </ul>
     </div>
 </div>

@@ -47,8 +47,8 @@ public class UserService implements UserDetailsService {
             CrmApplication.LOGGER.info("Такого депортамента не существует");
             return "Такого депортамента не существует";
         }
+        System.out.println("FFFF");
     User user = new User(login,name,lastname,phone,password,true,deportamentService.findByName(deportamentName).getId(),email,Collections.singleton(Role.USER));
-
     userRepository.save(user);
         CrmApplication.LOGGER.info("Пользователь успешно создан");
         return "Пользователь успешно создан";

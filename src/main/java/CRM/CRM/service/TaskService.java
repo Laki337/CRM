@@ -16,6 +16,7 @@ public interface TaskService {
     List<List<Task>> findTaskPriority(Long id);
     List<Task> findAll();
     Task findName(String name);
+    List<Task> findByPriority(String priority);
 
 
 

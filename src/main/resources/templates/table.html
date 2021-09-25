@@ -20,48 +20,45 @@
                     <a href="#" class="btn-close"><i class="halflings-icon white remove"></i></a>
                 </div>
             </div>
-            <div class="box-content">
-                <table class="table table-striped table-bordered bootstrap-datatable datatable">
-                    <thead>
-                    <tr>
-                        <th>Название</th>
-                        <th>Дата создания</th>
-                        <th>Задачи</th>
-                        <th>Сотрудники</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <div class="nanana"
-            </div>
-            <div th:each="el : ${deportaments}">
+            <table class="table table-striped table-bordered bootstrap-datatable datatable">
+                <thead>
                 <tr>
-                    <td class="center"><p th:text="${el.dataCreate}"/></td>
-                    <td class="center"><p th:text="${el.name}"/></td>
-                    <td class="center"><a th:href=" '/tasks/' + ${el.id}">Задачи</a></td>
-                    <td class="center"><a th:href=" '/users/' + ${el.id}">Сотрудники</a></td>
-                    <input class="input-xlarge focused" th:name="${el.id}"
-                           placeholder="Дата начала" type="hidden">
-                    </td>
-                    <td class="center">
-                        <button class="buton" th:name="${el.id}">Показать диалоговое окно</button>
-                        <form th:action="'/deportament/'+ ${el.id}+'/delete'" method="post">
-                            <button type="submit" class="btn btn-danger"></button>
-                            <i class="halflings-icon white trash"></i>
-                        </form>
-                    </td>
+                    <th>Название</th>
+                    <th>Дата создания</th>
+                    <th>Задачи</th>
+                    <th>Сотрудники</th>
                 </tr>
+                </thead>
+                <tbody>
+                <div th:each="el : ${deportaments}">
+                    <tr>
+                        <td class="center"><p th:text="${el.name}"/></td>
+                        <td class="center"><p th:text="${el.dataCreate}"/></td>
+                        <td class="center"><a th:href=" '/tasks/' + ${el.id}">Задачи</a></td>
+                        <td class="center"><a th:href=" '/users/' + ${el.id}">Сотрудники</a></td>
+                        <input class="input-xlarge focused" th:name="${el.id}"
+                               placeholder="Дата начала" type="hidden">
+                        <td class="center">
+                            <button class="buton1" th:name="${el.id}">Добавить задачу</button>
+                            <button class="buton2" th:name="${el.id}">Добавить сотрудника</button>
+                            <button class="buton3" th:name="${el.id}">Обновить отдел</button>
+                            <form th:action="'/table/'+${el.id}+'/delete'" method="post">
+                                <button> Удалить отдел</button>
+                            </form>
+                        </td>
+                    </tr>
 
-            </div>
-            </tbody>
+                </div>
+                </tbody>
             </table>
         </div>
     </div>
 </div>
 </div>
-<div id="dialog" title="Диалоговое окно" name="dialog">
+<div id="dialog1" title="Диалоговое окно" name="dialog">
     <div class=\"box-content\">
         <div class="control-group">
-            <form th:action="@{/createTaskDeportament}" method="post">
+            <form th:action="@{/table/createTaskDeportament}" method="post">
                 <label class="control-label">Название задачи</label>
                 <div class="controls">
                     <input class="input-xlarge focused" name="name" type="text"
@@ -84,38 +81,124 @@
                 </div>
                 <div class="controls hideSelect" id="hideSelect">
                     <select class="controls" name="priority">
-                        <option disabled>Выберите отдел</option>
-                        <option ></option>
+                        <option disabled>Выберите срочность</option>
+                        <option></option>
                         <option selected value="Не срочно">Не срочно</option>
                         <option value="Средней срочности">Средней срочности</option>
                         <option value="Очень срочно">Очень срочно</option>
                     </select>
                 </div>
-                <input class="input-xlarge focused" name="deportamentId" type="hidden" id = "deportamentId"
+                <input class="input-xlarge focused" name="deportamentId" type="hidden" id="deportamentId"
                        placeholder="Дата конца">
-                <button id = "baton" type="submit" class="btn btn-primary">Создать</button>
+                <button id="baton" type="submit" class="btn btn-primary">Создать</button>
 
             </form>
-            <div id="str"></div>
         </div>
 
     </div>
 </div>
+<div id="dialog2" title="Диалоговое окно" name="dialog2">
+    <div class="box-content">
+        <div class="control-group">
+            <form th:action="@{form/reg}" method="post">
+                <label class="control-label">Имя</label>
+                <div class="controls">
+                    <input class="input-xlarge focused" required name="username" type="text"
+                           placeholder="имя">
+                </div>
+                <label class="control-label">Фамилия</label>
+                <div class="controls">
+                    <input class="input-xlarge focused" required name="lastname" type="text"
+                           placeholder="фамилия">
+                </div>
+                <label class="control-label">Логин</label>
+                <div class="controls">
+                    <input class="input-xlarge focused" required name="login" type="text"
+                           placeholder="логин">
+                </div>
+                <label class="control-label">Пароль</label>
+                <div class="controls">
+                    <input class="input-xlarge focused" required name="password" type="text"
+                           placeholder="пароль">
+                </div>
+                <label class="control-label">Почта</label>
+                <div class="controls">
+                    <input class="input-xlarge focused" required name="email" type="email"
+                           placeholder="почта">
+                </div>
+                <label class="control-label">Номер телефона</label>
+                <div class="controls">
+                    <input class="input-xlarge focused" required name="number" type="number"
+                           placeholder="Номер телефона">
+                </div>
+                <div class="controls">
+                    <input class="input-xlarge focused" required name="departament" type="hidden"
+                           placeholder="Номер телефона">
+                </div>
+                <button type="submit" class="btn btn-primary open-window">Создать</button>
+            </form>
+        </div>
 
+    </div>
+</div>
+<div id="dialog3" title="Диалоговое окно" name="dialog3">
+
+    <div class="box-content">
+        <div class="control-group">
+
+            <form th:action="@{/table/updateDeportament}" method="post">
+                <label class="control-label">Название отедла</label>
+                <input class="input-xlarge focused" name="idDepartament" type="hidden" id=idDepartament>
+                <div class="controls">
+                    <input class="input-xlarge focused" name="nameDepartament" type="text" id=nameDepartament
+                           placeholder="">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Обновить</button>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
 
 <script type="text/javascript">
     $(function () {
-        $('#dialog').dialog({
+        $('#dialog1').dialog({
             autoOpen: false,
-            position: ['center', 'top']
+            position: ['center', 'top'],
+            modal:true
+
+        });
+        $('#dialog2').dialog({
+            autoOpen: false,
+            position: ['center', 'top'],
+            modal:true
+        });
+        $('#dialog3').dialog({
+            autoOpen: false,
+            position: ['center', 'top'],
+            modal:true
+        });
+        $('.buton1').button().click(function (e) {
+            let a = e.target
+            $('#deportamentId').val($(a).attr('name'));
+            console.log($('#deportamentId').val());
+            $('#dialog1').dialog("open")
         });
 
-        $('.buton').button().click(function (e) {
+        $('.buton2').button().click(function (e) {
             let a = e.target
-            console.log(a);
-            console.log($(a).attr('name'));
-            $('#deportamentId').val($(a).attr('name'));
-            $('#dialog').dialog("open")
+            $('#otvet').val($(a).attr('name'));
+            $('#updateDeportament').attr("placeholder", $(a).attr('name'));
+            $('#dialog2').dialog("open")
+        });
+        $('.buton3').button().click(function (e) {
+            let a = e.target;
+            $('#nameDepartament').val('');
+            $('#idDepartament').val($(a).attr('name'));
+            $('#dialog3').dialog("open");
+            console.log($('#idDepartament').val());
+            console.log($('#nameDepartament').val());
         });
 
     });
