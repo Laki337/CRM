@@ -22,17 +22,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/get/users", "/get/**", "/deportament/**", "/task/**", "/**", "/registration/**", "/js/**", "/error**").permitAll()
+                .antMatchers("/get/users", "/get/**", "/deportament/**", "/task/**", "/**", "/registration/**", "/js/**", "/error**","/test2").permitAll()
                 /// role
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
+                .defaultSuccessUrl("/")
                 .permitAll()
                 .and()
                 .logout()
-                .logoutUrl("/logout")
-                .permitAll();
+                .logoutSuccessUrl("/logout")
+                .permitAll()
+                .and().csrf().disable();
 
     }
 

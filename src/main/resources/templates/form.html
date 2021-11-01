@@ -42,29 +42,29 @@
                                 <label class="control-label">Логин</label>
                                 <div class="controls">
                                     <input class="input-xlarge focused" required name="login" type="text"
-                                           placeholder="логин">
+                                           placeholder="логин"/>
                                 </div>
                                 <label class="control-label">Пароль</label>
                                 <div class="controls">
                                     <input class="input-xlarge focused" required name="password" type="text"
-                                           placeholder="логин">
+                                           placeholder="логин"/>
                                 </div>
                                 <label class="control-label">Почта</label>
                                 <div class="controls">
                                     <input class="input-xlarge focused" required name="email" type="email"
-                                           placeholder="почта">
+                                           placeholder="почта"/>
                                 </div>
                                 <label class="control-label">Номер телефона</label>
                                 <div class="controls">
                                     <input class="input-xlarge focused" required name="number" type="number"
-                                           placeholder="пароль">
+                                           placeholder="пароль"/>
                                 </div>
                                 <div>
                                     <label class="control-label">Название отдела</label>
                                     <select name="deportament">
                                         <option disabled>Выберите отдел</option>
                                         <option th:each="el : ${deportaments}" th:text="${el.name}"
-                                                placeholder="Название отдела"></option>
+                                                placeholder="Название отдела"/>
                                     </select>
                                 </div>
                                 <button type="submit" class="btn btn-primary open-window">Создать</button>
@@ -167,11 +167,9 @@
 <script>
 
     $('#foo').change(function () {
-        $('#fooo').empty();
+            $('#fooo').empty();
                 $.getJSON('http://localhost:8082/get/users', function(result){
-
                     $.each(result ,function(i,item){
-
                             if(item['deportamentId']==$('#foo option:selected').val()) {
                                 $('#fooo').append($('<option>', {
                                     text: item['username']

@@ -1,7 +1,5 @@
 package CRM.CRM.controller;
 
-import CRM.CRM.model.Deportament;
-import CRM.CRM.model.Task;
 import CRM.CRM.model.User;
 import CRM.CRM.service.TaskService;
 import CRM.CRM.service.UserService;
@@ -24,17 +22,14 @@ public class UsersContoller {
 
     @GetMapping("")
     public String user(){
-        System.out.println("RAZZZ");
         return "/users";
     }
     @GetMapping("/{id}")
     public String users(@PathVariable(value = "id") Long id,Model model){
-        List<User> users = userService.findAll();
-        for(User user: users){
-            if (user.getDeportamentId()!= id){
-                users.remove(user);
-            }
-        }
+
+        List<User> users = userService.findAllDeportamentId(id);
+
+
         model.addAttribute("users",users);
         return "/users";
     }
@@ -50,18 +45,17 @@ public class UsersContoller {
                                  @RequestParam(name = "full_text" , required = false)  String full_text,
                                  @RequestParam(name = "localDateTimeStart" , required = false)String localDateTimeStart,
                                  @RequestParam(name = "localDateTimeEnd" , required = false)String localDateTimeEnd,
-                                 @RequestParam(name = "userId" , required = false)Long userId,
+                                 @RequestParam(name = "user" , required = false)Long userId,
                                  @RequestParam(name = "priority" , required = false)  String priority) {
-        System.out.println(userId);
-        Task task = new Task(name, full_text, localDateTimeStart, localDateTimeEnd,priority, true, userId);
-        System.err.println(task.getUserId());
-        taskService.add(task);
 
-        return "redirect:/table";
+        taskService.createTaskUser(name, full_text, localDateTimeStart, localDateTimeEnd,priority, true, userId);
+        return "redirect:/users";
     }
-    @RequestMapping("/createUser")
-    public String createUser(){
-        System.err.println("RAZ");
-        return "table";
+
+
+    @PostMapping("/{id}/delete")
+    public String usersDelete(@PathVariable(value = "id") Long id){
+        userService.deleteUser(id);
+        return "redirect:/users";
     }
 }

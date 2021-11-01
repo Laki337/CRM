@@ -34,7 +34,7 @@
                     <tr>
                         <td class="center"><p th:text="${el.name}"/></td>
                         <td class="center"><p th:text="${el.dataCreate}"/></td>
-                        <td class="center"><a th:href=" '/tasks/' + ${el.id}">Задачи</a></td>
+                        <td class="center"><a th:href=" '/tasks/deportament/' + ${el.id}">Задачи</a></td>
                         <td class="center"><a th:href=" '/users/' + ${el.id}">Сотрудники</a></td>
                         <input class="input-xlarge focused" th:name="${el.id}"
                                placeholder="Дата начала" type="hidden">
@@ -180,7 +180,9 @@
             modal:true
         });
         $('.buton1').button().click(function (e) {
+
             let a = e.target
+            console.log(a);
             $('#deportamentId').val($(a).attr('name'));
             console.log($('#deportamentId').val());
             $('#dialog1').dialog("open")

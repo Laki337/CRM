@@ -1,11 +1,13 @@
 package CRM.CRM.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -25,7 +27,15 @@ public class User implements UserDetails {
     private String cod;
     private Long deportamentId;
     private String email;
-
+    
+    @ManyToMany(fetch = FetchType.EAGER,  cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "user_chat",
+            joinColumns = @JoinColumn(name="user_id"),
+            inverseJoinColumns = @JoinColumn(name = "chat_id")
+    )
+    @JsonBackReference
+   private List<Chat> chats;
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)

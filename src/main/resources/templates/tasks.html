@@ -13,6 +13,7 @@
         <div class="span7">
             <h1>Tasks</h1>
 
+            <div  th:if="${!hight.isEmpty()}">
             <div class="priority high"><span>high priority</span></div>
             <div th:each="el : ${hight}">
             <div class="task high">
@@ -27,10 +28,11 @@
                <button type="submit" th:href=" '/tasks/' + ${el.id} + '/ready' ">Сдать задачу</button>
 
             </div>
-
+            </div>
+            <div  th:if="${!medium.isEmpty()}">
             <div class="priority medium"><span>medium priority</span></div>
                 <div th:each="el : ${medium}">
-            <div class="task medium">
+            <div class="task medium" >
                 <div class="desc">
                     <div class="title">  <p th:text="${el.title}"/></div>
                     <div> <p th:text="${el.full_text}"/></div>
@@ -41,7 +43,9 @@
                 </div>
                 <button type="submit" th:href=" '/tasks/' + ${el.id} + '/ready' ">Сдать задачу</button>
             </div>
-
+                </div>
+            </div>
+                <div  th:if="${!easy.isEmpty()}">
             <div class="priority low"><span>low priority</span></div>
                     <div th:each="el : ${easy}">
             <div class="task low">

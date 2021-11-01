@@ -6,12 +6,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/x")
-public class IndexController {
 
-    @GetMapping("")
-    public String index(Model model){
-        model.addAttribute("fignya", "nachenie");
-        return "index";
-    }
+public class TestController {
+	@GetMapping("/test")
+	public String getForm(Model model) {
+		
+		
+		return "test";
+	}
+	@GetMapping("/react")
+	public String react(Model model) {
+		
+		
+		return "/react";
+	}
+
 }

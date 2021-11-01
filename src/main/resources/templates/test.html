@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<head>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+
+        td,
+        th {
+            border: 1px solid black;
+            padding: 30px;
+            text-align: center;
+        }
+
+        th {
+            font-weight: bold;
+            background-color: #E6E6E6;
+        }
+
+        .hid {
+            width: 298px;
+            height: 218px;
+            padding: 18px 9px;
+            border-radius: 4px;
+            background: #fafafa;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            display: none;
+            opacity: 0;
+            z-index: 38;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+
+<div id="calendar"></div>
+<div id="god"></div>
+<div id="mesaz"></div>
+<button id="next"> next</button>
+<button id="back"> back</button>
+<button id="dela"> dela</button>
+<script>
+
+    const btn = document.getElementById('next');
+    const btn3 = document.getElementById('dela');
+    const btn2 = document.getElementById('back');
+    let data = new Date();
+    let year = document.getElementById('god');
+    let month = document.getElementById('mesaz');
+
+
+    function createCalendar(elem) {
+        year.innerHTML = data.getFullYear();
+        month.innerHTML = data.getMonth() + 1;
+        let d = new Date(data.getFullYear(), data.getMonth());
+
+        let table = '<table><tr><th>пн</th><th>вт</th><th>ср</th><th>чт</th><th>пт</th><th>сб</th><th>вс</th></tr><tr>';
+        for (let i = 0; i < getDay(d); i++) {
+            table += '<td></td>';
+        }
+        while (d.getMonth() == data.getMonth()) {
+            table += '<td class="tdtd">' + d.getDate() + '</td>';
+            if (getDay(d) % 7 == 6) {
+                table += '</tr><tr>';
+            }
+            d.setDate(d.getDate() + 1);
+        }
+        if (getDay(d) != 0) {
+            for (let i = getDay(d); i < 7; i++) {
+                table += '<td ></td>';
+            }
+        }
+        table += '</tr></table>';
+        elem.innerHTML = table;
+    }
+
+    function getDay(date) {
+        let day = date.getDay();
+        if (day == 0) day = 7;
+        return day - 1;
+    }
+
+    function next() {
+        data.setMonth(data.getMonth() + 1);
+        createCalendar(calendar);
+        dela();
+
+    }
+
+    function back() {
+        data.setMonth(data.getMonth() - 1);
+        createCalendar(calendar);
+        dela();
+    }
+
+    async function dela() {
+        const url = 'http://localhost:8082/get/dela/' + month.innerText + '/' + year.innerText;
+        let response = await fetch(url);
+        let commits = await response.json();
+        let a = document.getElementsByClassName('tdtd');
+        for (let i of a) {
+
+            for (let j of commits) {
+
+                let month = j.dateStart.toString().slice(5, 7)
+                let day = j.dateStart.toString().slice(8, 10)
+                if (this.month == month.textContent) {
+                    if (day == i.innerHTML.substring(0, 2)) {
+                        createElem(i, j.dateStart);
+                        createElem(i, j.dataEnd);
+                        createElem(i, j.type);
+                        let hid = document.createElement('div');
+                        hid.className += "hid";
+                        hid.innerHTML = j.name;
+                        $(hid).css('display', 'none');
+                        i.append(hid);
+
+                    }
+                }
+            }
+
+        }
+
+    }
+
+    function createElem(elem, name) {
+        let div = document.createElement('div');
+
+        div.className += "event";
+        div.innerHTML += name;
+
+        elem.append(div);
+    }
+
+    btn2.addEventListener('click', function (e) {
+        back();
+    })
+    btn.addEventListener('click', function (e) {
+        next();
+    })
+    btn3.addEventListener('click', function (e) {
+        dela();
+    })
+    createCalendar(calendar);
+    dela();
+    $(document).ready(function () {
+        $('.tdtd').hover(
+            function (event) {
+
+                let a = event.target;
+                let b = $(a).children('.hid');
+                $(b).fadeIn(297, function () {
+                    b.css('display', 'block')
+                        .animate({opacity: 1}, 0);
+                    console.log(b);
+                })
+            },
+            function () {
+                $('.hid').animate({opacity: 0}, 198, function () {
+                    $(this).css('display', 'none');
+                    $('.hid').fadeOut(297);
+                });
+            });
+    });
+
+</script>
+
+<form th:action="@{calendar/createEvent}" method="post">
+    <label class="control-label">Имя</label>
+    <div class="controls">
+        <input class="input-xlarge focused" name="name" type="text"
+               placeholder="имя">
+    </div>
+
+    <div class="controls">
+        <input class="input-xlarge focused" name="dateStart" type="datetime-local"
+               placeholder="фамилия">
+    </div>
+    <div class="controls">
+        <input class="input-xlarge focused" name="dateEnd" type="datetime-local"
+               placeholder="фамилия">
+    </div>
+    <div class="controls">
+        <input class="input-xlarge focused" name="type" type="String"
+               placeholder="фамилия">
+    </div>
+    <button type="submit" class="btn btn-primary open-window">Создать</button>
+</form>
+
+
+
+</body>
+</html>

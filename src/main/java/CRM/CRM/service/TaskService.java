@@ -9,15 +9,16 @@ import java.util.Optional;
 @Service
 public interface TaskService {
 
-    String add(Task task);
+    Task createTaskDeportament(String title, String full_text, String localDateTimeStart, String localDateTimeEnd, String priority, Long departamentId, boolean active);
+    Task createTaskUser(String title, String full_text, String localDateTimeStart, String localDateTimeEnd, String priority, boolean active, Long departamentId);
+
     void update(Task task);
-    String delete(Task task);
-    Optional<Task> find(Long id);
-    List<List<Task>> findTaskPriority(Long id);
-    List<Task> findAll();
-    Task findName(String name);
-    List<Task> findByPriority(String priority);
 
+    boolean deleteTask(final Long id);
 
+    List<Task> findByPriorityAndUserId(String name, Long id);
+
+    List<Task> findByPriorityAndDeportamentId(String name, Long id);
 
 }
+

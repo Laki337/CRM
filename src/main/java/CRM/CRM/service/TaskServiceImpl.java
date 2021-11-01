@@ -1,92 +1,100 @@
 package CRM.CRM.service;
 
-import CRM.CRM.CrmApplication;
-import CRM.CRM.controller.DeportamentController;
+
 import CRM.CRM.model.Task;
 import CRM.CRM.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 @Service
 public class TaskServiceImpl implements TaskService {
+	
+	@Autowired
+	TaskRepository taskRepository;
+	
+	@Autowired
+	UserService userService;
+	
+	@Autowired
+	Logger logger;
+	
+	@Override
+	public Task createTaskUser(String title, String full_text, String localDateTimeStart, String localDateTimeEnd, String priority, boolean active, Long userId) {
+		
+		return createTask(Task_from.USER, title, full_text, localDateTimeStart, localDateTimeEnd, priority, userId, active);
+	}
+	
+	@Override
+	public Task createTaskDeportament(String title, String full_text, String localDateTimeStart, String localDateTimeEnd, String priority, Long departamentId, boolean active) {
+		return createTask(Task_from.DEP, title, full_text, localDateTimeStart, localDateTimeEnd, priority, departamentId, active);
+	}
+	
+	public Task createTask(Task_from from, String title, String full_text, String localDateTimeStart, String localDateTimeEnd, String priority, Long id, boolean active) {
+		
+		final Task task;
+		try {
+			switch(from) {
+				case USER:
+					task = new Task(title, full_text, localDateTimeStart, localDateTimeEnd, priority, active, id);
+					break;
+				case DEP:
+					task = new Task(title, full_text, localDateTimeStart, localDateTimeEnd, priority, id, active);
+					break;
+				default:
+					throw new IllegalStateException("Unexpected value: " + from);
+			}
+			taskRepository.save(task);
+			logger.info("Задача создана");
+		} catch(Exception ex) {
+			logger.info("Задача не создана");
+			return null;
+		}
+		
+		return task;
+	}
+	
+	@Override
+	public void update(Task task) {
+	
+	}
+	
+	public boolean deleteTask(final Long id) {
+		final Task task;
+		try {
+			task = taskRepository.findById(id).get();
+			
+			if(task == null) {
+				logger.info("Такой пользователь не существует");
+				return false;
+			}
+			logger.info("Пользователь успешно удалён");
+			taskRepository.delete(task);
+		} catch(Exception e) {
+			logger.info("Пользователь не удалён");
+			return false;
+		}
+		return true;
+	}
+	
+	@Override
+	public List<Task> findByPriorityAndDeportamentId(String name, Long id) {
+		
+		return taskRepository.findByPriorityAndDepartamentId(name, id);
+	}
+	
+	@Override
+	public List<Task> findByPriorityAndUserId(String name, Long id) {
+		
+		return taskRepository.findByPriorityAndUserId(name, id);
+	}
+	
+	
+}
 
-    @Autowired
-    TaskRepository taskRepository;
-
-    @Autowired
-    UserService userService;
-
-    @Override
-    public String add(Task task) {
-
-        taskRepository.save(task);
-        return "Создание задачи прошло успешно";
-    }
-
-    @Override
-    public void update(Task task) {
-
-    }
-
-    @Override
-    public String delete(Task task) {
-
-            taskRepository.delete(task);
-        CrmApplication.LOGGER.info("Задача удалена успешно");
-        return "Задача удалена успешно";
-    }
-
-    @Override
-    public Optional<Task> find(Long id) {
-        return taskRepository.findById(id);
-    }
-
-    @Override
-    public List<Task> findAll() {
-        List<Task> list = taskRepository.findAll();
-        return list;
-    }
-
-    public Task findName(String name) {
-        return taskRepository.findByTitle(name);
-    }
-
-    @Override
-    public List<Task> findByPriority(String priority) {
-        return taskRepository.findByPriority(priority);
-    }
-
-
-    public List<List<Task>> findTaskPriority(Long id) {
-        List<List<Task>> l = new ArrayList<>();
-        List<Task> list = taskRepository.findAll();
-        List<Task> easy = new ArrayList<>();
-        List<Task> medium = new ArrayList<>();
-        List<Task> hight = new ArrayList<>();
-        for (Task t : list) {
-            if (t.getUserId() != id) {
-                System.out.println("RAZ");
-                continue;
-            }
-            if (t.getPriority().equals("easy")) {
-                easy.add(t);
-            }
-            if (t.getPriority().equals("medium")) {
-                medium.add(t);
-            }
-            if (t.getPriority().equals("hight")) {
-                hight.add(t);
-            }
-        }
-        l.add(easy);
-        l.add(medium);
-        l.add(hight);
-        System.out.println(l);
-        return l;
-    }
-
+enum Task_from {
+	USER, DEP
 }

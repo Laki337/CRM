@@ -7,10 +7,11 @@ import java.util.List;
 @Service
 public interface DeportamentService{
 
-     void createDepartament(Deportament deportament);
+     Deportament createDeportament(String name);
      void update(Deportament deportament , String name);
-     void delete(Deportament deportament);
+     boolean deleteDeportament(Long id);
      Deportament find(Long id);
      Deportament findByName(String name);
      List<Deportament> findAll();
+
 }

@@ -14,5 +14,8 @@ import java.util.Optional;
 public interface TaskRepository extends JpaRepository<Task, Long> {
      Task findByTitle(String name);
      List<Task> findByPriority(String priority);
+     List<Task> findByPriorityAndUserId(String name, Long id);
+     List<Task> findByPriorityAndDepartamentId(String name, Long id);
+
 
 }
